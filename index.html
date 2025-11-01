@@ -79,6 +79,69 @@
             </div>
         </nav>
     </header>
+    <!-- লাইভ সময় এবং ক্যালেন্ডার ডিসপ্লে -->
+<div id="calendar-bar" class="bg-gray-100 text-gray-800 text-xs py-1.5 px-4 shadow-sm hidden md:flex justify-between items-center border-b border-gray-300">
+    <div class="flex space-x-4">
+        <span id="live-time" class="font-bold"></span>
+    </div>
+    <div id="calendar-display" class="font-medium">
+        <!-- এখানে বাংলা, ইংরেজি ও আরবি তারিখ দেখানো হবে -->
+    </div>
+</div>
+
+<script>
+    // ক্যালেন্ডার এবং লাইভ সময় আপডেটের জন্য ফাংশন
+    function updateClockAndCalendar() {
+        const now = new Date();
+        const options = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+        const timeString = now.toLocaleTimeString('bn-BD', options);
+        document.getElementById('live-time').textContent = সময়: ${timeString};
+
+        // ইংরেজি ক্যালেন্ডার (Gregorian)
+        const engDate = now.toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+
+        // বাংলা ক্যালেন্ডার
+        const banglaDate = now.toLocaleDateString('bn-BD', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+
+        // আরবি ক্যালেন্ডার (Hijri - শুধুমাত্র ইসলামিক ক্যালেন্ডার দেখাবে)
+        const arabicDate = now.toLocaleDateString('ar-EG', { day: 'numeric', month: 'long', year: 'numeric', calendar: 'islamic' });
+
+        const calendarDisplay = document.getElementById('calendar-display');
+        calendarDisplay.innerHTML = `
+            <span>📅 ইংরেজি: ${engDate}</span>
+            <span class="ml-4 hidden sm:inline">|</span>
+            <span class="ml-4">বাংলা: ${banglaDate}</span>
+            <span class="ml-4 hidden sm:inline">|</span>
+            <span class="ml-4 hidden md:inline">আরবি: ${arabicDate}</span>
+        `;
+    }
+
+    // প্রতি ১ সেকেন্ড অন্তর সময় আপডেট করা
+    setInterval(updateClockAndCalendar, 1000);
+    updateClockAndCalendar(); // প্রথমবার কল করা
+</script>
+
+    <!-- নতুন ফলাফল প্রকাশের জন্য রানিং লাইন নোটিশ (Header-এর ঠিক নিচে বসবে) -->
+<div class="bg-red-700 text-white py-2 overflow-hidden shadow-inner">
+    <!-- Marquee-এর মতো স্ক্রলিং ইফেক্ট তৈরি করা হয়েছে -->
+    <div class="animate-marquee whitespace-nowrap text-lg font-semibold flex items-center">
+        <!-- রেজাল্ট প্রকাশের সময় এই লেখাটি পরিবর্তন করবে -->
+        <span class="mr-16">🚨 [নতুন ফলাফল প্রকাশ] ২৫ অক্টোবর অনুষ্ঠিত গণিত পরীক্ষার ফলাফল প্রকাশ হয়েছে।🚨</span>
+       
+    </div>
+</div>
+
+<!-- নতুন অ্যানিমেশন ইফেক্ট যোগ করা হয়েছে -->
+<style>
+    /* Tailwind CSS-এ কাস্টম অ্যানিমেশন যোগ করা */
+    @keyframes marquee {
+        0% { transform: translateX(100%); }
+        100% { transform: translateX(-100%); }
+    }
+    .animate-marquee {
+        animation: marquee 15s linear infinite; /* স্ক্রলিং স্পিড ও সময় এখানে পরিবর্তন করা যাবে */
+    }
+</style>
 
     <!-- Hero Section -->
     <section id="home" class="py-16 md:py-24 bg-red-50">
@@ -157,8 +220,8 @@
                 <!-- পরীক্ষার ফলাফল লিংক -->
                 <div class="bg-white p-6 rounded-xl shadow-lg flex flex-col justify-center items-center text-center transition duration-300 hover:shadow-xl border-t-4 border-red-600">
                     <h4 class="text-2xl font-semibold mb-4 text-red-600">সর্বশেষ পরীক্ষার ফলাফল</h4>
-                    <p class="text-gray-600 mb-6"> ৩০ অক্টোবর অনুষ্ঠিত বাংলা ও ইসলাম MCQ পরীক্ষার ফলাফল প্রকাশিত হয়েছে।</p>
-                    <a href="https://tinyurl.com/5bat7krs" class="inline-block px-8 py-3 bg-red-600 text-white text-lg font-bold rounded-lg shadow-md hover:bg-red-700 transition duration-300">
+                    <p class="text-gray-600 mb-6"> ২৫ অক্টোবর অনুষ্ঠিত গণিত পরীক্ষার ফলাফল প্রকাশিত হয়েছে।</p>
+                    <a href="https://script.google.com/macros/s/AKfycbxnZTxnMcVEHO9ONIVk0JY73ZpESfP2xsJjXKOIg5Srri_lkexLWI5M2ReXXxswn0g5NQ/exec">
                         রেজাল্ট দেখতে ক্লিক করুন
                     </a>
                 </div>
@@ -169,12 +232,15 @@
                     <!-- 'no-number-list' ব্যবহার করা হয়েছে -->
                     <ol class="space-y-3 text-lg no-number-list"> 
                         <!-- ১ম স্থান: গ্রিন (Green) - ব্যাকগ্রাউন্ড ডার্ক তাই টেক্সট সাদা -->
-                        <li class="p-2 rounded-md shadow-sm font-bold bg-green-600 text-white">১ম স্থান: মোঃ হাসানুর (৮৫%)</li>
+                        <li class="p-2 rounded-md shadow-sm font-bold bg-green-600 text-white">১ম স্থান:  মোছা: জুঁই (৯৫%), <br> 
+                                                                                                        ইসরাত জাহান আঁখি (৯৫%) এবং <br>
+                                                                                                            আশামনি (৯৫%)
+                        </li>
                         <!-- ২য় স্থান: হালকা গ্রিন (Light Green) - ব্যাকগ্রাউন্ড লাইট তাই টেক্সট কালো -->
-                        <li class="p-2 rounded-md shadow-sm font-semibold bg-green-300 text-gray-900">২য় স্থান: মোছা: জুঁই এবং <br>
-                                                                                                             ইসরাত জাহান আঁখি (৮০%)</li>
+                        <li class="p-2 rounded-md shadow-sm font-semibold bg-green-300 text-gray-900">২য় স্থান: মোঃ হাসানুর (৯০%)
+                                                                                                             </li>
                         <!-- ৩য় স্থান: খুব হালকা গ্রিন (Very Light Green) - ব্যাকগ্রাউন্ড লাইট তাই টেক্সট কালো -->
-                        <li class="p-2 rounded-md shadow-sm font-semibold bg-green-100 text-gray-900">৩য় স্থান: মোঃ শাকিল হাসান (৮০%)</li>
+                        <li class="p-2 rounded-md shadow-sm font-semibold bg-green-100 text-gray-900">৩য় স্থান: মোঃ মেহেদী হাসান (৭৭%)</li>
                     </ol>
                     <p class="text-sm text-gray-500 mt-4 text-center">পরের পরীক্ষায় টপার হতে তুমিও প্রস্তুত হও!</p>
                 </div>
@@ -203,7 +269,8 @@
                     <p class="text-gray-700 leading-relaxed">
                         সঠিক দিকনির্দেশনা এবং সুপরিকল্পিত শিক্ষাদানের মাধ্যমে প্রতি শিক্ষার্থীকে আমরা দিই সাফল্যের স্মার্ট সমাধান। আমরা বিশ্বাস করি, প্রতিভার সঠিক পরিচর্যাই উজ্জ্বল ভবিষ্যতের চাবিকাঠি। আমাদের কোর্সগুলি শুধু সিলেবাস কভার করে না, বরং শিক্ষার্থীদের সমালোচনামূলক চিন্তা (Critical Thinking) এবং সমস্যা সমাধানের দক্ষতা বৃদ্ধিতে সাহায্য করে।
                     </p>
-                                        <h4 class="text-2xl font-semibold mb-6 text-red-600 border-b pb-2">আমাদের বিশেষত্ব</h4>
+                                        <h4 class="text-2xl font-semibold mb-6 text-red-600 border-b pb-2"> <br> 
+                                            আমাদের বিশেষত্ব</h4>
                     
                     <!-- বিশেষত্বের তালিকা (Detailed Features) -->
                     <div class="space-y-6">
