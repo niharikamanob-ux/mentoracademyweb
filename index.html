@@ -38,6 +38,10 @@
         .spaced-heading span {
             margin-right: 0.25rem;
         }
+        /* Smooth Scroll যোগ করা হয়েছে */
+html {
+    scroll-behavior: smooth;
+}
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 antialiased">
@@ -88,45 +92,12 @@
         <!-- এখানে বাংলা, ইংরেজি ও আরবি তারিখ দেখানো হবে -->
     </div>
 </div>
-
-<script>
-    // ক্যালেন্ডার এবং লাইভ সময় আপডেটের জন্য ফাংশন
-    function updateClockAndCalendar() {
-        const now = new Date();
-        const options = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
-        const timeString = now.toLocaleTimeString('bn-BD', options);
-        document.getElementById('live-time').textContent = সময়: ${timeString};
-
-        // ইংরেজি ক্যালেন্ডার (Gregorian)
-        const engDate = now.toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-
-        // বাংলা ক্যালেন্ডার
-        const banglaDate = now.toLocaleDateString('bn-BD', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-
-        // আরবি ক্যালেন্ডার (Hijri - শুধুমাত্র ইসলামিক ক্যালেন্ডার দেখাবে)
-        const arabicDate = now.toLocaleDateString('ar-EG', { day: 'numeric', month: 'long', year: 'numeric', calendar: 'islamic' });
-
-        const calendarDisplay = document.getElementById('calendar-display');
-        calendarDisplay.innerHTML = `
-            <span>📅 ইংরেজি: ${engDate}</span>
-            <span class="ml-4 hidden sm:inline">|</span>
-            <span class="ml-4">বাংলা: ${banglaDate}</span>
-            <span class="ml-4 hidden sm:inline">|</span>
-            <span class="ml-4 hidden md:inline">আরবি: ${arabicDate}</span>
-        `;
-    }
-
-    // প্রতি ১ সেকেন্ড অন্তর সময় আপডেট করা
-    setInterval(updateClockAndCalendar, 1000);
-    updateClockAndCalendar(); // প্রথমবার কল করা
-</script>
-
     <!-- নতুন ফলাফল প্রকাশের জন্য রানিং লাইন নোটিশ (Header-এর ঠিক নিচে বসবে) -->
 <div class="bg-red-700 text-white py-2 overflow-hidden shadow-inner">
     <!-- Marquee-এর মতো স্ক্রলিং ইফেক্ট তৈরি করা হয়েছে -->
     <div class="animate-marquee whitespace-nowrap text-lg font-semibold flex items-center">
         <!-- রেজাল্ট প্রকাশের সময় এই লেখাটি পরিবর্তন করবে -->
-        <span class="mr-16">🚨 [নতুন ফলাফল প্রকাশ] ২৫ অক্টোবর অনুষ্ঠিত গণিত পরীক্ষার ফলাফল প্রকাশ হয়েছে।🚨</span>
+        <span class="mr-16">🚨 [নতুন ফলাফল প্রকাশ]৬ নভেম্বর অনুষ্ঠিত বাংলা ও ইসলাম MCQ পরীক্ষার ফলাফল প্রকাশিত হয়েছে।🚨</span>
        
     </div>
 </div>
@@ -220,10 +191,10 @@
                 <!-- পরীক্ষার ফলাফল লিংক -->
                 <div class="bg-white p-6 rounded-xl shadow-lg flex flex-col justify-center items-center text-center transition duration-300 hover:shadow-xl border-t-4 border-red-600">
                     <h4 class="text-2xl font-semibold mb-4 text-red-600">সর্বশেষ পরীক্ষার ফলাফল</h4>
-                    <p class="text-gray-600 mb-6"> ২৫ অক্টোবর অনুষ্ঠিত গণিত পরীক্ষার ফলাফল প্রকাশিত হয়েছে।</p>
-                    <a href="https://script.google.com/macros/s/AKfycbxnZTxnMcVEHO9ONIVk0JY73ZpESfP2xsJjXKOIg5Srri_lkexLWI5M2ReXXxswn0g5NQ/exec">
-                        রেজাল্ট দেখতে ক্লিক করুন
-                    </a>
+                    <p class="text-gray-600 mb-6"> ৬ নভেম্বর অনুষ্ঠিত বাংলা ও ইসলাম MCQ পরীক্ষার ফলাফল প্রকাশিত হয়েছে।</p>
+                    <a href="https://script.google.com/macros/s/AKfycbx9JhdYQA3raHFxyX8nun_JLl3pEd0RYvkcixJ9q0NfssK1mK0016aNJFeHHbtmEsF2Uw/exec" class="inline-block px-8 py-3 bg-red-600 text-white text-lg font-bold rounded-lg shadow-md hover:bg-red-700 transition duration-300">
+    রেজাল্ট দেখুন
+</a>
                 </div>
 
                 <!-- টপারদের নামের তালিকা -->
@@ -232,15 +203,13 @@
                     <!-- 'no-number-list' ব্যবহার করা হয়েছে -->
                     <ol class="space-y-3 text-lg no-number-list"> 
                         <!-- ১ম স্থান: গ্রিন (Green) - ব্যাকগ্রাউন্ড ডার্ক তাই টেক্সট সাদা -->
-                        <li class="p-2 rounded-md shadow-sm font-bold bg-green-600 text-white">১ম স্থান:  মোছা: জুঁই (৯৫%), <br> 
-                                                                                                        ইসরাত জাহান আঁখি (৯৫%) এবং <br>
-                                                                                                            আশামনি (৯৫%)
+                        <li class="p-2 rounded-md shadow-sm font-bold bg-green-600 text-white">১ম স্থান:   ইসরাত জাহান আঁখি (৮৫%)
                         </li>
                         <!-- ২য় স্থান: হালকা গ্রিন (Light Green) - ব্যাকগ্রাউন্ড লাইট তাই টেক্সট কালো -->
-                        <li class="p-2 rounded-md shadow-sm font-semibold bg-green-300 text-gray-900">২য় স্থান: মোঃ হাসানুর (৯০%)
+                        <li class="p-2 rounded-md shadow-sm font-semibold bg-green-300 text-gray-900">২য় স্থান: মোঃ শাকিল হাসান (৮৩%)
                                                                                                              </li>
                         <!-- ৩য় স্থান: খুব হালকা গ্রিন (Very Light Green) - ব্যাকগ্রাউন্ড লাইট তাই টেক্সট কালো -->
-                        <li class="p-2 rounded-md shadow-sm font-semibold bg-green-100 text-gray-900">৩য় স্থান: মোঃ মেহেদী হাসান (৭৭%)</li>
+                        <li class="p-2 rounded-md shadow-sm font-semibold bg-green-100 text-gray-900">৩য় স্থান: মোঃ হাসানুর (৮১%)</li>
                     </ol>
                     <p class="text-sm text-gray-500 mt-4 text-center">পরের পরীক্ষায় টপার হতে তুমিও প্রস্তুত হও!</p>
                 </div>
@@ -427,6 +396,11 @@
         </div>
     </div>
     </footer>
+    <a href="https://wa.me/+8801932125600" class="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white p-3 rounded-full shadow-lg z-50 transform hover:scale-110 transition duration-300" target="_blank">
+    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12.04 2C6.58 2 2.1 6.47 2.05 11.93l-.03 2.1.2 1.95 1.93 1.92 1.88 1.88 1.92.21 1.95.03 2.1.03c5.46.06 9.93-4.42 9.97-9.88.04-5.46-4.43-9.94-9.97-9.94zm4.6 15.33c-.22.61-.8.96-1.53.96-.28 0-.46-.02-.82-.14-.24-.08-.57-.2-.93-.33-.5-.18-1.5-.4-2.58-.9-.86-.4-1.63-.98-2.3-1.65-.67-.67-1.25-1.44-1.65-2.3-.5-.95-.72-1.95-.9-2.58-.12-.35-.25-.68-.33-.92-.12-.36-.14-.54-.14-.82 0-.73.35-1.31.96-1.53.18-.07.4-.15.65-.25.26-.1.52-.2.72-.2.24 0 .4.04.57.2.16.14.3.36.46.6.14.24.27.5.38.74.1.24.2.5.25.72.06.26.08.56 0 .84-.04.13-.15.34-.33.58-.2.25-.39.52-.58.75-.14.22-.3.47-.46.73-.25.4-.4.65-.4 1.1 0 .22.06.46.3.68.2.18.44.38.7.6.25.22.5.42.75.6.3.2.6.35.9.35.15 0 .3-.02.44-.06.26-.06.5-.15.72-.25.22-.1.44-.22.68-.38.2-.14.42-.3.65-.46.25-.18.48-.36.72-.58.2-.24.4-.44.6-.6.2-.2.4-.3.6-.3.26 0 .5.1.7.3.2.2.4.4.6.7.2.3.4.7.6 1.1.2.4.3.8.3 1.2 0 .28-.02.56-.06.77-.08.2-.15.4-.25.6-.2.4-.48.8-.75 1.1-.08.1-.15.2-.23.3z"/>
+    </svg>
+</a>
     
     <!-- JavaScript for Mobile Menu Toggle -->
     <script>
@@ -449,6 +423,59 @@
                 });
             });
         });
+    </script>
+    <script>
+        // জাভাস্ক্রিপ্ট ফাংশনগুলো এখানে আছে
+
+        // ১. মোবাইল মেনু টগল ফাংশন
+        document.getElementById('menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // ২. ফুটারে বর্তমান বছর স্বয়ংক্রিয়ভাবে দেখানোর ফাংশন
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // ৩. লাইভ সময় এবং ক্যালেন্ডার আপডেটের ফাংশন
+        function updateClockAndCalendar() {
+            const now = new Date();
+            
+            // লাইভ সময় (Live Time)
+            const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+            const timeString = now.toLocaleTimeString('bn-BD', timeOptions);
+            const liveTimeElement = document.getElementById('live-time');
+
+            if (liveTimeElement) {
+                liveTimeElement.textContent = সময়: ${timeString};
+            }
+
+            // ক্যালেন্ডার (Calendar)
+            const calendarDisplay = document.getElementById('calendar-display');
+            if (calendarDisplay) {
+                // ইংরেজি ক্যালেন্ডার (Gregorian)
+                const engDate = now.toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+
+                // বাংলা ক্যালেন্ডার (Localised to bn-BD)
+                // এখানে timeZone: 'Asia/Dhaka' যোগ করা হলো নিশ্চিত নির্ভুলতার জন্য
+                const banglaDate = now.toLocaleDateString('bn-BD', { timeZone: 'Asia/Dhaka', weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+
+                // আরবি ক্যালেন্ডার (Hijri - শুধুমাত্র ইসলামিক ক্যালেন্ডার দেখাবে)
+                const arabicDate = now.toLocaleDateString('ar-EG', { day: 'numeric', month: 'long', year: 'numeric', calendar: 'islamic' });
+
+                calendarDisplay.innerHTML = `
+                    <span class="text-gray-700">📅 ইংরেজি: ${engDate}</span>
+                    <span class="ml-4 hidden sm:inline text-gray-400">|</span>
+                    <span class="ml-4 text-gray-700">বাংলা: ${banglaDate}</span>
+                    <span class="ml-4 hidden md:inline text-gray-400">|</span>
+                    <span class="ml-4 hidden md:inline text-gray-700">আরবি: ${arabicDate}</span>
+                `;
+            }
+        }
+
+        // প্রতি ১ সেকেন্ড অন্তর সময় আপডেট করা
+        setInterval(updateClockAndCalendar, 1000);
+        updateClockAndCalendar(); // প্রথমবার কল করা
+
     </script>
 </body>
 </html>
