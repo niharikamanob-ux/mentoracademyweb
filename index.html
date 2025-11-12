@@ -1,462 +1,377 @@
-<!-- Mentor Academy ওয়েবসাইট: টপারদের জন্য কাস্টম গ্রিন কালার থিম এবং টেক্সট কালার আপডেট করা হয়েছে -->
+<!DOCTYPE html>
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mentor Academy - স্মার্ট ভবিষ্যতের প্রস্তুতি</title>
-    <!-- Tailwind CSS লোড করা হচ্ছে -->
+    <title>Mentor Academy</title>
+    <!-- Tailwind CSS লোড করা হয়েছে -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Tiro Bangla ফন্ট শুধু টেক্সট-এর জন্য লোড করা হয়েছে -->
+    <!-- Alpine JS: ড্রপডাউন মেনু এবং অন্যান্য ইন্টারেকশনের জন্য -->
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <!-- Google Font: Tiro Bangla (পরিষ্কার বাংলা অক্ষর ও সংখ্যার জন্য) -->
     <link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:wght@400;700&display=swap" rel="stylesheet">
-    
     <style>
-        /* ডিফল্ট ফন্ট: মূল প্যারাগ্রাফের জন্য Tiro Bangla */
-        body { font-family: 'Tiro Bangla', serif; }
-
-        /* হেডিং, স্লোগান এবং সংখ্যাগুলোর জন্য ডিফল্ট সিস্টেম ফন্ট ব্যবহার, যাতে পরিষ্কার থাকে */
-        h1, h2, h3, h4, .font-bold, .font-semibold {
-            font-family: inherit; 
+        /* ফন্ট সেটিংস: পুরো সাইটের জন্য Tiro Bangla */
+        body {
+            font-family: 'Tiro Bangla', sans-serif;
+            scroll-behavior: smooth;
         }
-        
-        /* টপার লিস্টে ডিফল্ট সংখ্যা বন্ধ করা হয়েছে */
-        .no-number-list {
-            list-style: none; /* ডিফল্ট তালিকা সংখ্যা সরানো হলো */
+        /* টপারদের তালিকা থেকে অটোমেটিক নম্বর (1, 2, 3) লুকানো */
+        .no-list-style {
+            list-style: none;
             padding-left: 0;
         }
-        
-        /* মোবাইল মেনু ট্রানজিশন */
-        #mobile-menu {
-            transition: max-height 0.3s ease-out;
-            max-height: 0;
-            overflow: hidden;
+        .no-list-style li {
+            margin-bottom: 1rem;
         }
-        #mobile-menu.open {
-            max-height: 300px;
+        /* ড্রপডাউন মেনু অ্যালাইনমেন্ট ঠিক করা */
+        .dropdown-menu {
+            right: 0;
+            top: 100%;
+            margin-top: 0.5rem;
         }
-
-        /* Hero সেকশনের হেডিং স্পেস ঠিক করা */
-        .spaced-heading span {
-            margin-right: 0.25rem;
-        }
-        /* Smooth Scroll যোগ করা হয়েছে */
-html {
-    scroll-behavior: smooth;
-}
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800 antialiased">
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- লাইভ সময় এবং ক্যালেন্ডার ডিসপ্লে -->
+    <div id="calendar-bar" class="bg-gray-100 text-gray-800 text-xs py-1.5 px-4 shadow-sm hidden md:flex justify-between items-center border-b border-gray-300">
+        <div class="flex space-x-4">
+            <span id="live-time" class="font-bold"></span>
+        </div>
+        <div id="calendar-display" class="font-medium">
+            <!-- এখানে বাংলা, ইংরেজি ও আরবি তারিখ দেখানো হবে -->
+        </div>
+    </div>
+
+    <!-- নতুন ফলাফল প্রকাশের জন্য রানিং লাইন নোটিশ -->
+    <div class="bg-red-700 text-white py-2 overflow-hidden shadow-inner">
+        <marquee class="text-sm font-semibold tracking-wider">
+            🚨 ফলাফল ও প্রকাশ! ১০ নভেম্বর অনুষ্ঠিত বাংলা প্রথম পত্রের  সব কবিতার উপর  MCQ পরীক্ষার ফলাফল প্রকাশ হয়েছে। 🚨 ভর্তি চলছে: ২০২৬ সালের SSC পরীক্ষার জন্য নতুন ব্যাচের ভর্তি প্রক্রিয়া শুরু হয়েছে। 
+        </marquee>
+    </div>
 
     <!-- Header / Navigation -->
     <header class="bg-white shadow-md sticky top-0 z-10">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
-            <!-- লোগো/নাম (Mentor: Red, Academy: Green) -->
-            <h1 class="text-3xl font-bold">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <!-- লোগো/নাম -->
+            <a href="#home" class="text-2xl font-bold tracking-tight">
                 <span class="text-red-600">Mentor</span><span class="text-green-600">Academy</span>
-            </h1>
-            
-            <!-- ডেস্কটপ মেনু -->
+            </a>
+
+            <!-- মেনু (ডেস্কটপ) -->
             <nav class="hidden md:flex space-x-6 text-lg font-medium">
-                <a href="#home" class="text-red-600 hover:text-red-800 transition duration-150">হোম</a>
-                <a href="#updates" class="hover:text-red-600 transition duration-150">নোটিশ</a>
-                <a href="#results" class="hover:text-red-600 transition duration-150">ফলাফল</a>
-                <a href="#about" class="hover:text-red-600 transition duration-150">আমাদের কথা</a>
-                <a href="#contact" class="hover:text-red-600 transition duration-150">যোগাযোগ</a>
+                <a href="#home" class="text-gray-600 hover:text-red-600 transition">হোম</a>
+                <a href="#about" class="text-gray-600 hover:text-red-600 transition">আমাদের সম্পর্কে</a>
+                <a href="#results" class="text-gray-600 hover:text-red-600 transition">ফলাফল</a>
+                <a href="#updates" class="text-gray-600 hover:text-red-600 transition">নোটিশ</a>
+                <a href="#contact" class="text-gray-600 hover:text-red-600 transition">যোগাযোগ</a>
             </nav>
 
-            <!-- মোবাইল মেনু বাটন (Hamburger Icon) -->
-            <button id="menu-button" class="md:hidden text-gray-800 hover:text-red-600 p-2 focus:outline-none rounded-md transition duration-150" aria-label="Toggle menu">
-                <!-- Three Dots Icon (SVG) -->
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
+            <!-- মোবাইল হ্যামবার্গার মেনু -->
+            <button id="menu-button" class="md:hidden text-gray-600 hover:text-red-600 transition focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
             </button>
         </div>
-        
-        <!-- মোবাইল মেনু ড্রপডাউন -->
-        <nav id="mobile-menu" class="md:hidden bg-white shadow-lg">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#home" class="block px-3 py-2 rounded-md text-base font-medium text-red-600 hover:bg-gray-100">হোম</a>
-                <a href="#updates" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100">নোটিশ</a>
-                <a href="#results" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100">ফলাফল</a>
-                <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100">আমাদের কথা</a>
-                <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100">যোগাযোগ</a>
-            </div>
-        </nav>
     </header>
-<!-- লাইভ সময় এবং ক্যালেন্ডার ডিসপ্লে -->
-<div id="calendar-bar" class="bg-gray-100 text-gray-800 text-xs py-1.5 px-4 shadow-sm hidden md:flex justify-between items-center border-b border-gray-300">
-    <div class="flex space-x-4">
-        <span id="live-time" class="font-bold"></span>
-    </div>
-    <div id="calendar-display" class="font-medium">
-        <!-- এখানে বাংলা, ইংরেজি ও আরবি তারিখ দেখানো হবে -->
-    </div>
-</div>
-    <!-- নতুন ফলাফল প্রকাশের জন্য রানিং লাইন নোটিশ (Header-এর ঠিক নিচে বসবে) -->
-<div class="bg-red-700 text-white py-2 overflow-hidden shadow-inner">
-    <!-- Marquee-এর মতো স্ক্রলিং ইফেক্ট তৈরি করা হয়েছে -->
-    <div class="animate-marquee whitespace-nowrap text-lg font-semibold flex items-center">
-        <!-- রেজাল্ট প্রকাশের সময় এই লেখাটি পরিবর্তন করবে -->
-        <span class="mr-16">🚨 [নতুন ফলাফল প্রকাশ] ১০ নভেম্বর অনুষ্ঠিত বাংলা প্রথম পত্রের  সব কবিতার উপর  MCQ পরীক্ষার ফলাফল প্রকাশ হয়েছে।🚨</span>
-       
-    </div>
-</div>
 
-<!-- নতুন অ্যানিমেশন ইফেক্ট যোগ করা হয়েছে -->
-<style>
-    /* Tailwind CSS-এ কাস্টম অ্যানিমেশন যোগ করা */
-    @keyframes marquee {
-        0% { transform: translateX(100%); }
-        100% { transform: translateX(-100%); }
-    }
-    .animate-marquee {
-        animation: marquee 15s linear infinite; /* স্ক্রলিং স্পিড ও সময় এখানে পরিবর্তন করা যাবে */
-    }
-</style>
+    <!-- মোবাইল মেনু ড্রপডাউন -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg absolute top-0 w-full z-20 mt-16 border-t border-gray-200">
+        <a href="#home" class="block px-4 py-3 text-gray-700 hover:bg-gray-100 transition border-b">হোম</a>
+        <a href="#about" class="block px-4 py-3 text-gray-700 hover:bg-gray-100 transition border-b">আমাদের সম্পর্কে</a>
+        <a href="#results" class="block px-4 py-3 text-gray-700 hover:bg-gray-100 transition border-b">ফলাফল</a>
+        <a href="#updates" class="block px-4 py-3 text-gray-700 hover:bg-gray-100 transition border-b">নোটিশ</a>
+        <a href="#contact" class="block px-4 py-3 text-gray-700 hover:bg-gray-100 transition">যোগাযোগ</a>
+    </div>
 
     <!-- Hero Section -->
     <section id="home" class="py-16 md:py-24 bg-red-50">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <!-- বাংলা স্পেস ঠিক করা হয়েছে -->
-            <h2 class="text-4xl md:text-5xl font-extrabold mb-4 spaced-heading">
-                <span class="text-red-600">মেন্টর</span><span class="text-green-600">একাডেমি</span>
-            </h2>
+        <div class="container mx-auto px-4 text-center">
             
-            <p class="text-2xl md:text-3xl text-gray-800 mb-8 font-medium max-w-3xl mx-auto">
-                ভালোভাবে শিখি, <br>
-                স্মার্ট হয়ে উঠি। <br>
-                সুপরিকল্পিত শিক্ষায় গড়ি, <br>
-                স্মার্ট জীবনের ভিত্তি।
-            </p>
-            <p class="text-xl md:text-2xl text-red-600 font-semibold mb-10">
-                অভিজ্ঞ মেন্টরদের হাত ধরে শুরু হোক 
-                        উজ্জ্বল পথযাত্রা।
-            </p>
-            <!-- দৈনিক কোট সেকশন (Daily Quote/Hadith Display) -->
-<section class="py-10 bg-gray-100 border-b border-gray-200">
-    <div class="container mx-auto px-4 text-center max-w-2xl">
-        <h3 class="text-xl font-bold text-green-600 mb-3">আজকের অনুপ্রেরণা</h3>
-        <blockquote id="daily-quote" class="text-2xl italic text-gray-800 leading-relaxed">
-            <!-- JavaScript এই অংশটি প্রতিদিন পরিবর্তন করবে -->
-            "জ্ঞানের চেয়ে উত্তম পোশাক নেই, আর বিনয়ের চেয়ে উত্তম কিছু নেই।" (হাদিস)
-        </blockquote>
-    </div>
-</section>
+            <!-- দৈনিক কোট ব্লক -->
+            <div class="max-w-xl mx-auto mb-8 p-4 bg-white rounded-lg shadow-lg border-t-4 border-green-500">
+                <h3 class="text-sm font-bold text-green-600 mb-2 uppercase"></h3>
+                <blockquote id="daily-quote" class="text-lg italic text-gray-800 leading-relaxed">
+                    “জ্ঞানের চেয়ে উত্তম পোশাক নেই, আর বিনয়ের চেয়ে উত্তম কিছু নেই।” <br><cite class="text-xs font-medium text-red-500">— (হাদিস)</cite>
+                </blockquote>
+            </div>
 
-<!-- নিচে থাকা <script> ট্যাগের ভেতরে এই ফাংশনটি যোগ করতে হবে! -->
-            <!-- CTA Button -->
-            <a href="#contact" class="inline-block px-10 py-4 bg-green-600 text-white text-xl font-bold rounded-full shadow-lg hover:bg-green-700 transition duration-300 transform hover:scale-105">
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-4 tracking-tighter">
+                <span class="text-red-600">মেন্টর</span> <span class="text-green-600">একাডেমি</span>
+            </h1>
+            <h2 class="text-2xl md:text-4xl text-gray-700 mb-6 font-semibold tracking-wide">
+                অভিজ্ঞ মেন্টরদের হাত ধরে শুরু হোক উজ্জ্বল পথযাত্রা।
+            </h2>
+            <p class="text-lg md:text-xl text-gray-600 mb-10 font-medium max-w-3xl mx-auto">
+                ভালোভাবে শিখি, স্মার্ট হয়ে উঠি, <br class="hidden sm:inline"> সুপরিকল্পিত শিক্ষায় গড়ি <br>স্মার্ট জীবনের ভিত্তি।
+            </p>
+            <a href="#updates" class="inline-block px-10 py-4 bg-green-600 text-white text-xl font-bold rounded-xl shadow-xl hover:bg-green-700 transform hover:scale-105 transition duration-300">
                 ভর্তি সংক্রান্ত তথ্য জানুন
             </a>
         </div>
     </section>
 
-    <!-- Updates and Notice Section -->
-    <section id="updates" class="py-12 md:py-16 bg-white">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-bold text-center text-red-600 mb-6">
-    <span class="inline-flex items-center">
-        <svg class="w-10 h-10 mr-3 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
-        গুরুত্বপূর্ণ নোটিশ ও ঘোষণা
-    </span>
-</h2>
-
-
-                <!-- নোটিশ ২: নতুন ভর্তির বিজ্ঞপ্তি (উদাহরণ) -->
-                <div class="bg-green-50 border-l-4 border-green-500 text-green-800 p-4 rounded-lg shadow-md" role="alert">
-                    <div class="font-bold text-lg mb-1 flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8m0 0l-8 8m0 0l8-8m0 0l8 8" />
-                        </svg>
-                        নতুন ব্যাচে ভর্তি শুরু!
-                    </div>
-                    <p class="text-center text-gray-500 text-lg mb-12">
-                        ২০২৬ সালের SSC পরীক্ষার জন্য নতুন ব্যাচের ভর্তি প্রক্রিয়া শুরু হয়েছে। আসন সংখ্যা সীমিত, দ্রুত যোগাযোগ করুন।
-                    </p>
-                    <!-- বিস্তারিত লিঙ্ক যোগ করার স্থান -->
-                    <a href="#contact" class="text-blue-600 hover:underline font-medium mt-2 block">
-                        ভর্তি প্রক্রিয়া ও ফিস সম্পর্কে জানুন
-                    </a>
-                </div>
-
+    <!-- About Us Section (New Academic Format) -->
+    <section id="about" class="py-16 md:py-20 bg-white">
+        <div class="container mx-auto px-4">
+            
+            <!-- ০১. প্রতিষ্ঠাতা ও পরিচালকের বার্তা (উপরে) -->
+            <div class="bg-gray-50 p-6 rounded-xl shadow-lg border-l-4 border-red-600 mb-12 transform hover:scale-[1.005] transition duration-300">
+                <h3 class="text-3xl font-semibold text-red-700 mb-4 border-b pb-2">প্রতিষ্ঠাতা ও পরিচালকের বার্তা</h3>
+                <p class="text-gray-600 text-lg leading-relaxed mb-4">
+                    "Mentor Academy শুধু একটি শিক্ষাপ্রতিষ্ঠান নয়, এটি শিক্ষার্থীদের স্বপ্ন বুননের নির্ভরযোগ্য মঞ্চ। আমরা বিশ্বাস করি, প্রতিটি শিক্ষার্থীই অপার সম্ভাবনাময় এবং আমাদের সুদীর্ঘ অভিজ্ঞতা প্রমাণ করে—সঠিক ব্যক্তিগত মনোযোগ ও নির্ভুল দিকনির্দেশনা একটি উজ্জ্বল ভবিষ্যতের ভিত্তি স্থাপন করতে সক্ষম। অভিজ্ঞ মেন্টরদের তত্ত্বাবধানে, আমরা প্রতিটি ছাত্রছাত্রীকে শুধু পরীক্ষায় ভালো ফলের জন্য নয়, বরং ভবিষ্যতের চ্যালেঞ্জ মোকাবিলায় স্মার্ট ও আত্মবিশ্বাসী নাগরিক হিসেবে গড়ে তুলতে অঙ্গীকারবদ্ধ।"
+                </p>
+                <p class="text-gray-700 font-bold mt-4">
+                    - ইউসুফ আহমেদ, প্রতিষ্ঠাতা ও পরিচালক
+                </p>
             </div>
-        </div>
-    </section>
 
-    <!-- Results and Toppers Section -->
-    <section id="results" class="py-12 md:py-16 bg-gray-100">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-bold text-center text-green-600 mb-6">
-    <span class="inline-flex items-center">
-        <svg class="w-10 h-10 mr-3 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11.25c1.38 0 2.5 1.12 2.5 2.5s-1.12 2.5-2.5 2.5-2.5-1.12-2.5-2.5 1.12-2.5 2.5-2.5zM12 2a10 10 0 100 20 10 10 0 000-20zM12 1a11 11 0 110 22 11 11 0 010-22zM12 17.5c-3.1 0-5.62-2.5-5.62-5.62s2.5-5.63 5.62-5.63 5.63 2.5 5.63 5.63-2.5 5.62-5.63 5.62zM12 17.5V22"></path></svg>
-        পরীক্ষার ফলাফল
-    </span>
-</h2>
+            <!-- ০২. লক্ষ্য ও বিশেষত্ব হেডিং -->
+            <h2 class="text-4xl font-bold text-center text-green-600 mb-6 border-b-2 border-green-200 pb-3 inline-block mx-auto">
+                <span class="inline-flex items-center">
+                    <img src="https://placehold.co/100x100/d1fae5/065f46?text=GOAL" alt="লক্ষ্য আইকন" class="w-12 h-12 mr-3" onerror="this.onerror=null;this.src='placeholder.png';">
+                    আমাদের লক্ষ্য ও বিশেষত্ব
+                </span>
+            </h2>
+            <p class="text-center text-gray-500 text-lg mb-12">আমরা কীভাবে শিক্ষার্থীদের প্রস্তুত করি, তার বিস্তারিত।</p>
 
-          <!-- পরীক্ষার ফলাফল বাটন: সাবজেক্ট ড্রপডাউন যুক্ত করা হলো -->
-<div class="relative inline-block text-left">
-    <button id="result-dropdown-button" class="inline-flex justify-center w-full rounded-lg border border-transparent shadow-lg px-8 py-3 bg-red-600 text-lg font-bold text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-300">
-        ফলাফল দেখুন ▼
-    </button>
-    
-    <div id="result-dropdown-menu" class="origin-top-right absolute right-0 mt-2 w-64 rounded-md shadow-2xl bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 hidden z-30">
-        <div class="py-1">
-            <!-- প্রথম সাবজেক্টের লিঙ্ক: যেমন গণিত -->
-            <a href="https://script.google.com/macros/s/AKfycbwrQZvybz-D7Ga9zPqIo_RA25jHXVYdrXJtKBCxt-hFVEM2LIBxtX8Bt8VyeUvaGPmfkg/exec]" target="_blank" class="block px-4 py-3 text-lg text-gray-700 hover:bg-gray-100 hover:text-red-600 transition">
-                বাংলা সব কবিতা(MCQ)
-            </a>
-        </div>
-        <div class="py-1">
-            <!-- দ্বিতীয় সাবজেক্টের লিঙ্ক: যেমন বিজ্ঞান -->
-            <a href="" target="_blank" class="block px-4 py-3 text-lg text-gray-700 hover:bg-gray-100 hover:text-red-600 transition">
-               
-            </a>
-        </div>
-    </div>
-</div>
-
-<script>
-    // ড্রপডাউন ফাংশন (জাভাস্ক্রিপ্ট)
-    document.getElementById('result-dropdown-button').addEventListener('click', function() {
-        const menu = document.getElementById('result-dropdown-menu');
-        menu.classList.toggle('hidden');
-    });
-</script>
-                <!-- টপারদের নামের তালিকা -->
-                <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-green-600">
-                    <h4 class="text-2xl font-semibold mb-4 text-green-600 text-center">টপারদের তালিকা</h4>
-                    <!-- 'no-number-list' ব্যবহার করা হয়েছে -->
-                    <ol class="space-y-3 text-lg no-number-list"> 
-                        <!-- ১ম স্থান: গ্রিন (Green) - ব্যাকগ্রাউন্ড ডার্ক তাই টেক্সট সাদা -->
-                        <li class="p-2 rounded-md shadow-sm font-bold bg-green-600 text-white">১ম স্থান: মোছাঃ জুঁই   
-                        </li>
-                        <!-- ২য় স্থান: হালকা গ্রিন (Light Green) - ব্যাকগ্রাউন্ড লাইট তাই টেক্সট কালো -->
-                        <li class="p-2 rounded-md shadow-sm font-semibold bg-green-300 text-gray-900">২য় স্থান: আশামনি (৮৫%)
-                                                                                                             </li>
-                        <!-- ৩য় স্থান: খুব হালকা গ্রিন (Very Light Green) - ব্যাকগ্রাউন্ড লাইট তাই টেক্সট কালো -->
-                        <li class="p-2 rounded-md shadow-sm font-semibold bg-green-100 text-gray-900">৩য়  স্থান: মোঃ হাসানুর (৭১%)</li>
-                    </ol>
-                    <p class="text-center text-gray-500 text-lg mb-12">পরের পরীক্ষায় টপার হতে তুমিও প্রস্তুত হও!</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Us and Founder's Message Section -->
-    <section id="about" class="py-12 md:py-16 bg-white">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h3 class="text-3xl font-bold text-center mb-10 border-b-2 border-red-600 inline-block px-4 pb-2">আমাদের সম্পর্কে দেখুন</h3>
-
-            <div class="max-w-4xl mx-auto space-y-8">
-                <!-- প্রতিষ্ঠাতা ও পরিচালকের বার্তা -->
-                <div class="bg-red-50 p-6 rounded-xl shadow-lg border-l-4 border-red-600">
-                    <h4 class="text-2xl font-semibold mb-3 text-red-600">প্রতিষ্ঠাতা ও পরিচালকের বার্তা</h4>
-                    <p class="text-gray-700 leading-relaxed italic mb-4">
-                        "Mentor Academy শুধু একটি শিক্ষাপ্রতিষ্ঠান নয়, এটি শিক্ষার্থীদের স্বপ্ন বুননের নির্ভরযোগ্য মঞ্চ। আমরা বিশ্বাস করি, প্রতিটি শিক্ষার্থীই অপার সম্ভাবনাময় এবং আমাদের সুদীর্ঘ অভিজ্ঞতা প্রমাণ করে—সঠিক ব্যক্তিগত মনোযোগ ও নির্ভুল দিকনির্দেশনা একটি উজ্জ্বল ভবিষ্যতের ভিত্তি স্থাপন করতে সক্ষম। অভিজ্ঞ মেন্টরদের তত্ত্বাবধানে, আমরা প্রতিটি ছাত্রছাত্রীকে শুধু পরীক্ষায় ভালো ফলের জন্য নয়, বরং ভবিষ্যতের চ্যালেঞ্জ মোকাবিলায় স্মার্ট ও আত্মবিশ্বাসী নাগরিক হিসেবে গড়ে তুলতে অঙ্গীকারবদ্ধ।"
-                    </p>
-                    <p class="text-right font-bold text-red-700">- ইউসুফ আহমেদ , প্রতিষ্ঠাতা ও পরিচালক</p>
-                </div>
-
-                <!-- আমাদের লক্ষ্য -->
-                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-green-600">
-                   <h2 class="text-4xl font-bold text-center text-red-600 mb-6">
-    <span class="inline-flex items-center">
-        <svg class="w-10 h-10 mr-3 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.765l-2.382 3.844M14 10l-2 3m2-3h-2M4 7v10m-2 0h2m-2-4h2m-2-4h2m-2-4h2m-2-4h2"></path></svg>
-        আমাদের লক্ষ্য
-    </span>
-    <div class="h-1 w-24 bg-red-500 mx-auto mt-2 rounded-full"></div>
-</h2>
-                   <p class="text-center text-gray-500 text-lg mb-12">
+            <div class="grid md:grid-cols-2 gap-12">
+                <!-- ক. লক্ষ্য ও দর্শন -->
+                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-red-600 transform hover:scale-[1.01] transition duration-300">
+                    <h4 class="text-2xl font-semibold text-gray-800 mb-4"> লক্ষ্য</h4>
+                    <p class="text-gray-600 text-lg leading-relaxed">
                         সঠিক দিকনির্দেশনা এবং সুপরিকল্পিত শিক্ষাদানের মাধ্যমে প্রতি শিক্ষার্থীকে আমরা দিই সাফল্যের স্মার্ট সমাধান। আমরা বিশ্বাস করি, প্রতিভার সঠিক পরিচর্যাই উজ্জ্বল ভবিষ্যতের চাবিকাঠি। আমাদের কোর্সগুলি শুধু সিলেবাস কভার করে না, বরং শিক্ষার্থীদের সমালোচনামূলক চিন্তা (Critical Thinking) এবং সমস্যা সমাধানের দক্ষতা বৃদ্ধিতে সাহায্য করে।
                     </p>
-                                        <h4 class="text-2xl font-semibold mb-6 text-red-600 border-b pb-2"> <br> 
-                                            আমাদের বিশেষত্ব</h4>
+                </div>
+
+                <!-- খ. বিশেষ সুবিধা (তালিকা) -->
+                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-green-600 transform hover:scale-[1.01] transition duration-300">
+                    <h4 class="text-2xl font-semibold text-gray-800 mb-4">বিশেষত্ব</h4>
                     
-                    <!-- বিশেষত্বের তালিকা (Detailed Features) -->
-                    <div class="space-y-6">
-                        <!-- পয়েন্ট ১: নিয়মিত মডেল টেস্ট -->
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 mr-3 text-green-600">
-                                <!-- বিশেষ সাইন/আইকন (টিক চিহ্ন) -->
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                            </div>
+                    <div class="space-y-4">
+                        <!-- ১. নিয়মিত মডেল টেস্ট -->
+                        <div class="flex items-start space-x-3 bg-green-50 p-3 rounded-lg shadow-sm">
+                            <span class="text-green-600 mt-1"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></span>
                             <div>
-                                <h5 class="text-lg font-bold text-gray-900">নিয়মিত মডেল টেস্ট</h5>
-                                <p class="text-sm text-gray-600 mt-1">
-                                    চূড়ান্ত পরীক্ষার আদলে মডেল টেস্টের মাধ্যমে শিক্ষার্থীদের দুর্বলতা খুঁজে বের করা হয় এবং তাদের পরীক্ষার প্রস্তুতি সুনিশ্চিত করা হয়।
-                                </p>
+                                <p class="text-gray-700 font-medium">নিয়মিত মডেল টেস্ট:</p> 
+                                <p class="text-gray-600 text-sm">চূড়ান্ত পরীক্ষার আদলে মডেল টেস্টের মাধ্যমে শিক্ষার্থীদের দুর্বলতা খুঁজে বের করা হয় এবং তাদের পরীক্ষার প্রস্তুতি নিশ্চিত করা হয়।</p>
                             </div>
                         </div>
 
-                        <!-- পয়েন্ট ২: শিক্ষার্থীর দুর্বলতা বিশ্লেষণ -->
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 mr-3 text-green-600">
-                                <!-- বিশেষ সাইন/আইকন (টিক চিহ্ন) -->
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                            </div>
+                        <!-- ২. শিক্ষার্থীর দুর্বলতা বিশ্লেষণ -->
+                        <div class="flex items-start space-x-3 bg-green-100 p-3 rounded-lg shadow-sm">
+                            <span class="text-green-700 mt-1"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c1.657 0 3 .895 3 2s-1.343 2-3 2-3-.895-3-2 1.343-2 3-2z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2-1.343-2-3-2z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></span>
                             <div>
-                                <h5 class="text-lg font-bold text-gray-900">শিক্ষার্থীর দুর্বলতা বিশ্লেষণ</h5>
-                                <p class="text-sm text-gray-600 mt-1">
-                                    প্রতিটি পরীক্ষার ফলাফলের ওপর ভিত্তি করে শিক্ষার্থীর ব্যক্তিগত দুর্বলতার কারণ খুঁজে বের করা হয় ও সমাধানের পথ দেখানো হয়।
-                                </p>
+                                <p class="text-gray-700 font-medium">শিক্ষার্থীর দুর্বলতা বিশ্লেষণ:</p>
+                                <p class="text-gray-600 text-sm">প্রতিটি পরীক্ষার ফলাফলের ওপর ভিত্তি করে শিক্ষার্থীর ব্যক্তিগত দুর্বলতার কারণ খুঁজে বের করা হয় ও সমাধানের পথ দেখানো হয়।</p>
+                            </div>
+                        </div>
+                        
+                        <!-- ৩. আধুনিক অনলাইন রেজাল্ট সিস্টেম -->
+                        <div class="flex items-start space-x-3 bg-green-50 p-3 rounded-lg shadow-sm">
+                            <span class="text-green-600 mt-1"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></span>
+                            <div>
+                                <p class="text-gray-700 font-medium">আধুনিক অনলাইন রেজাল্ট সিস্টেম:</p>
+                                <p class="text-gray-600 text-sm">দ্রুত, নির্ভুলভাবে পরীক্ষার ফলাফল অভিভাবক এবং শিক্ষার্থীর কাছে অনলাইনে পৌঁছে দেওয়ার ব্যবস্থা।</p>
                             </div>
                         </div>
 
-                        <!-- পয়েন্ট ৩: অনলাইন রেজাল্ট সিস্টেম -->
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 mr-3 text-green-600">
-                                <!-- বিশেষ সাইন/আইকন (টিক চিহ্ন) -->
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                            </div>
+                        <!-- ৪. পাঠদান শেষে বাড়তি সহযোগিতার সুযোগ -->
+                        <div class="flex items-start space-x-3 bg-green-100 p-3 rounded-lg shadow-sm">
+                            <span class="text-green-700 mt-1"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5s3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18s-3.332.477-4.5 1.253"></path></svg></span>
                             <div>
-                                <h5 class="text-lg font-bold text-gray-900">আধুনিক অনলাইন রেজাল্ট সিস্টেম</h5>
-                                <p class="text-sm text-gray-600 mt-1">
-                                    দ্রুত, নির্ভুলভাবে পরীক্ষার ফলাফল অভিভাবক এবং শিক্ষার্থীদের কাছে অনলাইনে পৌঁছে দেওয়ার ব্যবস্থা।
-                                </p>
+                                <p class="text-gray-700 font-medium">পাঠদান শেষে বাড়তি সহযোগিতা:</p>
+                                <p class="text-gray-600 text-sm">প্রতিটি ক্লাসের পর মেন্টরদের কাছ থেকে অতিরিক্ত প্রশ্ন জিজ্ঞাসা এবং ব্যক্তিগত সংশয় নিরসনের বিশেষ সুবিধা।</p>
                             </div>
                         </div>
 
-                        <!-- পয়েন্ট ৪: পাঠদান শেষে বাড়তি সহযোগিতার সুযোগ -->
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 mr-3 text-green-600">
-                                <!-- বিশেষ সাইন/আইকন (টিক চিহ্ন) -->
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                            </div>
+                        <!-- ৫. সুনাগরিক হিসেবে গড়ে তোলা -->
+                        <div class="flex items-start space-x-3 bg-green-50 p-3 rounded-lg shadow-sm">
+                            <span class="text-green-600 mt-1"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 1.105.895 2 2 2h12a2 2 0 002-2V7m-4 5h-4m4 0l-2-2m2 2l-2 2m-4-6h4a2 2 0 012 2v2a2 2 0 01-2 2h-4a2 2 0 01-2-2v-2a2 2 0 012-2z"></path></svg></span>
                             <div>
-                                <h5 class="text-lg font-bold text-gray-900">পাঠদান শেষে বাড়তি সহযোগিতা</h5>
-                                <p class="text-sm text-gray-600 mt-1">
-                                    প্রতিটি ক্লাসের পর মেন্টরদের কাছ থেকে অতিরিক্ত প্রশ্ন জিজ্ঞাসা এবং ব্যক্তিগত সংশয় নিরসনের বিশেষ সুবিধা।
-                                </p>
-                            </div>
-                        </div>
-
-                        <!-- পয়েন্ট ৫: সুনাগরিক হিসেবে গড়ে তোলা -->
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 mr-3 text-green-600">
-                                <!-- বিশেষ সাইন/আইকন (টিক চিহ্ন) -->
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                            </div>
-                            <div>
-                                <h5 class="text-lg font-bold text-gray-900">শৃঙ্খলা ও মূল্যবোধের চর্চা</h5>
-                                <p class="text-sm text-gray-600 mt-1">
-                                    শুধুমাত্র ভালো ছাত্র নয়, সুনাগরিক হিসেবে গড়ে তোলার জন্য কঠোর শৃঙ্খলা এবং নৈতিক মূল্যবোধে জোর দেওয়া হয়।
-                                </p>
+                                <p class="text-gray-700 font-medium">শৃঙ্খলা ও মূল্যবোধের চর্চা:</p>
+                                <p class="text-gray-600 text-sm">শুধু মাত্র ভালো ছাত্র নয়, সুনাগরিক হিসেবে গড়ে তোলার জন্য কঠোর শৃঙ্খলা এবং নৈতিক মূল্যবোধের ওপর জোর দেওয়া হয়।</p>
                             </div>
                         </div>
                     </div>
-
-                    
                 </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Results and Toppers Section -->
+    <section id="results" class="py-16 md:py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center text-green-600 mb-6 border-b-2 border-green-200 pb-3 inline-block mx-auto">
+                <span class="inline-flex items-center">
+                    <img src="https://placehold.co/100x100/d1fae5/065f46?text=TROPHY" alt="ট্রফি আইকন" class="w-12 h-12 mr-3" onerror="this.onerror=null;this.src='placeholder.png';">
+                    পরীক্ষার ফলাফল ও টপার
+                </span>
+            </h2>
+            <p class="text-center text-gray-500 text-lg mb-12">শিক্ষার্থীদের সাফল্য </p>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- পরীক্ষার ফলাফল বাটন -->
+                <div class="md:col-span-1 bg-white p-6 rounded-xl shadow-lg border-t-8 border-red-600 text-center flex flex-col justify-center items-center transform hover:scale-[1.03] transition duration-300">
+                    <h3 class="text-2xl font-semibold mb-6">সর্বশেষ পরীক্ষার রেজাল্ট</h3>
+                    
+                    <!-- ড্রপডাউন মেনু -->
+                    <div class="relative inline-block text-left" x-data="{ open: false }" @click.outside="open = false">
+                        <button id="result-dropdown-button" @click="open = !open" type="button" class="inline-flex justify-center items-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-red-600 text-lg font-bold text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-300">
+                            ফলাফল দেখুন <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                        </button>
+
+                        <div id="result-dropdown-menu" x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none hidden" role="menu" aria-orientation="vertical" aria-labelledby="result-dropdown-button">
+                            <div class="py-1" role="none">
+                                <a href="https://script.google.com/macros/s/AKfycbwrQZvybz-D7Ga9zPqIo_RA25jHXVYdrXJtKBCxt-hFVEM2LIBxtX8Bt8VyeUvaGPmfkg/exec" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100" role="menuitem">বাংলা MCQ ফলাফল </a>
+    
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ড্রপডাউন মেনু JS নিচে যোগ করা আছে -->
+                    <p class="text-sm text-gray-500 mt-4">১০ নভেম্বর অনুষ্ঠিত বাংলা প্রথম পত্রের  সব কবিতার উপর  MCQ পরীক্ষার ফলাফল  প্রকাশিত।</p>
+                </div>
+
+                <!-- টপারদের তালিকা -->
+                <div class="md:col-span-2 bg-white p-6 rounded-xl shadow-lg border-t-8 border-green-600">
+                    <h3 class="text-2xl font-semibold mb-6 text-gray-800">সর্বশেষ পরীক্ষার সেরা তিন</h3>
+                    
+                    <ol class="no-list-style space-y-6">
+                        <!-- ১. প্রথম স্থান (গাঢ় সবুজ) -->
+                        <li class="p-4 rounded-xl shadow-lg bg-green-600 text-white transform hover:scale-[1.01] transition duration-300">
+                            <span class="text-xl font-extrabold mr-4 border-r pr-4 border-white border-opacity-50">১ম স্থান</span>
+                            <span class="text-xl font-semibold text-black bg-white px-3 py-1 rounded-md shadow-inner">
+                                মোছাঃ জুঁই (৮৬%)
+                            </span>
+                            <p class="text-sm mt-2 italic">🌟 সাফল্যের মূল চাবিকাঠি হলো ধারাবাহিক কঠোর পরিশ্রম!</p>
+                        </li>
+
+                        <!-- ২. দ্বিতীয় স্থান (হালকা সবুজ) -->
+                        <li class="p-4 rounded-xl shadow-lg bg-green-300 text-gray-900 transform hover:scale-[1.01] transition duration-300">
+                            <span class="text-xl font-extrabold mr-4 border-r pr-4 border-gray-900 border-opacity-50">২য় স্থান</span>
+                            <span class="text-xl font-semibold text-black bg-white px-3 py-1 rounded-md shadow-inner">
+                                আশামনি (৮৫%)
+                            </span>
+                            <p class="text-sm mt-2 italic">✨ পরের পরীক্ষার জন্য তোমাকে উষ্ণ অভিনন্দন ও শুভকামনা।</p>
+                        </li>
+
+                        <!-- ৩. তৃতীয় স্থান (খুব হালকা সবুজ) -->
+                        <li class="p-4 rounded-xl shadow-lg bg-green-100 text-gray-800 transform hover:scale-[1.01] transition duration-300">
+                            <span class="text-xl font-extrabold mr-4 border-r pr-4 border-gray-900 border-opacity-50">৩য় স্থান</span>
+                            <span class="text-xl font-semibold text-black bg-white px-3 py-1 rounded-md shadow-inner">
+                                মোঃ হাসানুর (৭৫%)
+                            </span>
+                            <p class="text-sm mt-2 italic">🎯 নিজের ওপর বিশ্বাস রাখো, তুমি সেরাটা দিতে পারবে!</p>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Updates/Notice Section -->
+    <section id="updates" class="py-16 md:py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center text-red-600 mb-6 border-b-2 border-red-200 pb-3 inline-block mx-auto">
+                <span class="inline-flex items-center">
+                    <img src="https://placehold.co/100x100/fee2e2/991b1b?text=NOTICE" alt="নোটিশ আইকন" class="w-12 h-12 mr-3" onerror="this.onerror=null;this.src='placeholder.png';">
+                    গুরুত্বপূর্ণ নোটিশ ও ঘোষণা
+                </span>
+            </h2>
+            <p class="text-center text-gray-500 text-lg mb-12">আপডেট এবং ভর্তির তথ্যের জন্য চোখ রাখুন।</p>
+
+            <div class="max-w-3xl mx-auto space-y-6">
+                <!-- নোটিশ ১: নতুন ব্যাচ -->
+                <div class="bg-blue-100 border-l-4 border-blue-500 text-blue-800 p-4 rounded-lg shadow-sm" role="alert">
+                    <div class="font-bold text-lg mb-1">নতুন ব্যাচে ভর্তি শুরু!</div>
+                    <p class="text-gray-800 mb-2">
+                        ২০২৬ সালের SSC পরীক্ষার জন্য নতুন ব্যাচের ভর্তি প্রক্রিয়া শুরু হয়েছে। আসন সংখ্যা সীমিত, দ্রুত যোগাযোগ করুন।
+                    </p>
+                    <a href="#" class="text-blue-700 hover:underline font-medium mt-2 block">ভর্তি প্রক্রিয়া ও ফিস সম্পর্কে জানুন</a>
+                      </div>
+                
+                <!-- নতুন কোনো নোটিশ এখানে যোগ করুন -->
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-12 md:py-16 bg-gray-100">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-bold text-center text-green-600 mb-6">
-    যোগাযোগ ও ঠিকানা
-    <span class="h-1 bg-green-600 w-1/4 mt-1 rounded-full mx-auto"></span>
-</h2>
-    <div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-    <!-- ঠিকানা (ঠিক করা হয়েছে) -->
-    <div class="bg-white p-6 rounded-xl shadow-lg border-b-4 border-green-600 text-center">
-        <h4 class="text-xl font-semibold mb-2 flex justify-center items-center">
-            <svg class="w-6 h-6 mr-2 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.828 0l-4.243-4.243m12.728 0a8 8 0 10-11.313 0M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <section id="contact" class="py-16 md:py-20 bg-gray-100">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold text-center text-green-600 mb-6 border-b-2 border-green-200 pb-3 inline-block mx-auto">
+                <span class="inline-flex items-center">
+                    <img src="https://placehold.co/100x100/d1fae5/065f46?text=CONTACT" alt="যোগাযোগ আইকন" class="w-12 h-12 mr-3" onerror="this.onerror=null;this.src='placeholder.png';">
+                    যোগাযোগ ও ঠিকানা
+                </span>
+            </h2>
+            <p class="text-center text-gray-500 text-lg mb-12">যে কোনো তথ্যের জন্য সরাসরি কথা বলুন।</p>
 
-                        ঠিকানা:
-                    </p>
-                    <p class="pl-9 text-gray-700">
-                        বাইটকামারি প্রাইমারি স্কুলের পূর্বপাশে,<br>
-                         বাইটকামারি, রৌমারি, কুড়িগ্রাম।
-                    </p>
+            <div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+               
+                <!-- ফোন -->
+                <div class="bg-white p-6 rounded-xl shadow-lg border-b-4 border-green-600 text-center transform hover:scale-[1.03] transition duration-300">
+                    <svg class="w-8 h-8 mx-auto text-red-600 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                    <h4 class="text-xl font-semibold mb-2">ফোন নম্বর</h4>
+                    <p class="text-gray-600">০১৯৩২১২৫৬০০</p>
+                </div>
 
-                    <p class="text-lg font-semibold text-green-600 flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                        </svg>
-                        ফোন নম্বর:
-                    </p>
-                    <p class="pl-9 text-gray-700">০১৯৩২১২৫৬০০</p>
-
-                    <p class="text-lg font-semibold text-green-600 flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-2 4v7a2 2 0 01-2 2H5a2 2 0 01-2-2v-7" />
-                        </svg>
-                        জিমেইল:
-                    </p>
-                    <p class="pl-9 text-gray-700">mentoracademy10@gmail.com</p>
+                <!-- ইমেইল -->
+                <div class="bg-white p-6 rounded-xl shadow-lg border-b-4 border-green-600 text-center transform hover:scale-[1.03] transition duration-300">
+                    <svg class="w-8 h-8 mx-auto text-red-600 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-2 4v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path></svg>
+                    <h4 class="text-xl font-semibold mb-2">ইমেইল</h4>
+                    <p class="text-gray-600">mentoracademy10@gmail.com</p>
+                </div>
+                 <!-- ঠিকানা -->
+                <div class="bg-white p-6 rounded-xl shadow-lg border-b-4 border-green-600 text-center transform hover:scale-[1.03] transition duration-300">
+                    <svg class="w-8 h-8 mx-auto text-red-600 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.828 0l-4.243-4.243m12.728 0a8 8 0 10-11.313 0M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <h4 class="text-xl font-semibold mb-2">ঠিকানা</h4>
+                    <p class="text-gray-600">বাইটকামারি প্রাইমারি স্কুলের পূর্বপাশে, বাইটকামারি, রৌমারি, কুড়িগ্রাম।</p>
                 </div>
 
                 <!-- ভর্তির সময়সূচী -->
-                <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                <div class="md:col-span-3 mt-8 max-w-lg mx-auto bg-gray-50 p-6 rounded-xl shadow-inner border border-gray-200">
                     <h4 class="text-xl font-bold mb-4 text-center text-red-600">ভর্তির জন্য কথা বলার সময়সূচী</h4>
-                    <p class="text-gray-700 mb-4 text-center">
-                        ভর্তি সংক্রান্ত অথবা অন্য কোনো আলোচনার জন্য আমাদের সাথে নিচের সময় যোগাযোগ করুন।
-                    </p>
-                    <ul class="space-y-2 text-center text-gray-800 font-semibold">
-                        <li class="p-1 bg-green-100 rounded-md">
-                            শনি থেকে সোমবার: <br>
-                            সকাল ৭টা - সকাল ১০টা</li>
-                        <li class="p-1 bg-green-100 rounded-md"থেকে>
-                            মঙ্গল থেকে বৃহস্পতিবার: <br>
-                            বিকেল ৩টা - বিকেল ৫টা</li>
-                        <li class="p-1 text-red-600 font-bold">    
-                            শুক্রবার: বন্ধ</li>
-                    </ul>
+                    <div class="flex justify-center space-x-6">
+                        <p class="p-2 bg-green-100 rounded-md font-semibold text-gray-800">শনি থেকে সোমবার: <br> 
+                                                                                         সকাল ৭টা - সকাল ১০টা</p>
+                        <p class="p-2 bg-green-100 rounded-md font-semibold text-gray-800">মঙ্গল থেকে বৃহস্পতিবার: <br> 
+                                                                                           বিকাল ৩টা - বিকাল ৫টা</p>
+                    </div>
+                    <p class="text-red-600 font-bold mt-1 text-center">শুক্রবার: বন্ধ</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-6">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm">
-            <p>&copy; 2025 Mentor Academy. সমস্ত অধিকার সংরক্ষিত।</p>
-            <p class="mt-2 text-gray-400">স্মার্ট শিক্ষায় গড়ি স্মার্ট জীবনের ভিত্তি।</p>
+    <footer class="bg-gray-800 text-white py-6">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; <span id="current-year"></span> Mentor Academy. সমস্ত অধিকার সংরক্ষিত।</p>
+            <p class="text-sm mt-1 text-gray-400">Powered by Mentor Academy</p>
+            
+            <!-- সোশ্যাল মিডিয়া লিঙ্ক সেকশন -->
+            <div class="flex justify-center space-x-6 mt-4">
+                <!-- Facebook -->
+                <a href="#" target="_blank" class="text-gray-400 hover:text-white transition">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.313 0 2.68.234 2.68.234v2.953H15.83c-1.49 0-1.955.925-1.955 1.874v2.195h3.327l-.532 3.47h-2.795v8.385C19.612 22.954 24 17.99 24 12z"/></svg>
+                </a>
+                <!-- Twitter/X -->
+                <a href="#" target="_blank" class="text-gray-400 hover:text-white transition">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.568-2.005.974-3.127 1.188-1.947-2.074-4.832-2.33-7.151-.837-1.12.723-1.637 2.054-1.258 3.336-4.524-.224-8.526-2.392-11.218-5.698-.466.8-.737 1.745-.737 2.766 0 1.951.996 3.688 2.502 4.706-.867-.024-1.69-.265-2.404-.664v.054c0 2.636 1.879 4.836 4.35 5.335-.453.123-.934.187-1.425.187-.348 0-.687-.034-1.02-.095.692 2.165 2.71 3.738 5.105 3.778-1.782 1.39-4.004 2.228-6.43 2.228-.413 0-.82-.024-1.226-.076 2.307 1.487 5.064 2.355 7.973 2.355 9.57 0 14.793-7.962 14.793-14.793 0-.224-.005-.448-.014-.67z"/></svg>
+                </a>
+            </div>
+            
         </div>
-    </div>
     </footer>
-    <!-- ভাসমান WhatsApp বাটন (Floating Button) - Updated Icon -->
-<a href="https://wa.me/8801932125600" class="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white p-3 rounded-full shadow-xl z-50 transform hover:scale-110 transition duration-300" target="_blank">
-    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
-        <!-- WhatsApp আইকনের SVG কোড -->
-        <path d="M12.04 2C6.58 2 2.1 6.47 2.05 11.93l-.03 2.1.2 1.95 1.93 1.92 1.88 1.88 1.92.21 1.95.03 2.1.03c5.46.06 9.93-4.42 9.97-9.88.04-5.46-4.43-9.94-9.97-9.94zm4.6 15.33c-.22.61-.8.96-1.53.96-.28 0-.46-.02-.82-.14-.24-.08-.57-.2-.93-.33-.5-.18-1.5-.4-2.58-.9-.86-.4-1.63-.98-2.3-1.65-.67-.67-1.25-1.44-1.65-2.3-.5-.95-.72-1.95-.9-2.58-.12-.35-.25-.68-.33-.92-.12-.36-.14-.54-.14-.82 0-.73.35-1.31.96-1.53.18-.07.4-.15.65-.25.26-.1.52-.2.72-.2.24 0 .4.04.57.2.16.14.3.36.46.6.14.24.27.5.38.74.1.24.2.5.25.72.06.26.08.56 0 .84-.04.13-.15.34-.33.58-.2.25-.39.52-.58.75-.14.22-.3.47-.46.73-.25.4-.4.65-.4 1.1 0 .22.06.46.3.68.2.18.44.38.7.6.25.22.5.42.75.6.3.2.6.35.9.35.15 0 .3-.02.44-.06.26-.06.5-.15.72-.25.22-.1.44-.22.68-.38.2-.14.42-.3.65-.46.25-.18.48-.36.72-.58.2-.24.4-.44.6-.6.2-.2.4-.3.6-.3.26 0 .5.1.7.3.2.2.4.4.6.7.2.3.4.7.6 1.1.2.4.3.8.3 1.2 0 .28-.02.56-.06.77-.08.2-.15.4-.25.6-.2.4-.48.8-.75 1.1-.08.1-.15.2-.23.3z"/>
-    </svg>
-</a>
-    
-    <!-- JavaScript for Mobile Menu Toggle -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const menuButton = document.getElementById('menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const mobileLinks = mobileMenu.querySelectorAll('a');
 
-            // মেনু টগল ফাংশন
-            menuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('open');
-            });
+    <!-- ভাসমান WhatsApp বাটন -->
+    <a href="https://wa.me/8801923225600" class="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white p-3 rounded-full shadow-xl z-50 transform hover:scale-110 transition duration-300" target="_blank">
+        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+            <!-- WhatsApp আইকনের SVG কোড -->
+            <path d="M12.04 2C6.58 2 2.1 6.47 2.05 11.93l-.03 2.1.2 1.95 1.93 1.92 1.88 1.88 1.92.21 1.95.03 2.1.03c5.46.06 9.93-4.42 9.97-9.88.04-5.46-4.43-9.94-9.97-9.94zm4.6 15.33c-.22.61-.8.96-1.53.96-.28 0-.46-.02-.82-.14-.24-.08-.57-.2-.93-.33-.5-.18-1.5-.4-2.58-.9-.86-.4-1.63-.98-2.3-1.65-.67-.67-1.25-1.44-1.65-2.3-.5-.95-.72-1.95-.9-2.58-.12-.35-.25-.68-.33-.92-.12-.36-.14-.54-.14-.82 0-.73.35-1.31.96-1.53.18-.07.4-.15.65-.25.26-.1.52-.2.72-.2.24 0 .4.04.57.2.16.14.3.36.46.6.14.24.27.5.38.74.1.24.2.5.25.72.06.26.08.56 0 .84-.04.13-.15.34-.33.58-.2.25-.39.52-.58.75-.14.22-.3.47-.46.73-.25.4-.4.65-.4 1.1 0 .22.06.46.3.68.2.18.44.38.7.6.25.22.5.42.75.6.3.2.6.35.9.35.15 0 .3-.02.44-.06.26-.06.5-.15.72-.25.22-.1.44-.22.68-.38.2-.14.42-.3.65-.46.25-.18.48-.36.72-.58.2-.24.4-.44.6-.6.2-.2.4-.3.6-.3.26 0 .5.1.7.3.2.2.4.4.6.7.2.3.4.7.6 1.1.2.4.3.8.3 1.2 0 .28-.02.56-.06.77-.08.2-.15.4-.25.6-.2.4-.48.8-.75 1.1-.08.1-.15.2-.23.3z"/>
+        </svg>
+    </a>
 
-            // মেনুর যেকোনো লিঙ্কে ক্লিক করলে মেনুটি বন্ধ হবে
-            mobileLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    if (mobileMenu.classList.contains('open')) {
-                        mobileMenu.classList.remove('open');
-                    }
-                });
-            });
-        });
-    </script>
     <script>
         // জাভাস্ক্রিপ্ট ফাংশনগুলো এখানে আছে
 
@@ -466,10 +381,19 @@ html {
             menu.classList.toggle('hidden');
         });
 
+        // ড্রপডাউন ফাংশন
+        const resultDropdownButton = document.getElementById('result-dropdown-button');
+        if (resultDropdownButton) {
+            resultDropdownButton.addEventListener('click', function() {
+                const menu = document.getElementById('result-dropdown-menu');
+                menu.classList.toggle('hidden');
+            });
+        }
+        
         // ২. ফুটারে বর্তমান বছর স্বয়ংক্রিয়ভাবে দেখানোর ফাংশন
         document.getElementById('current-year').textContent = new Date().getFullYear();
 
-       // ৩. লাইভ সময় এবং ক্যালেন্ডার আপডেটের ফাংশন
+        // ৩. লাইভ সময় এবং ক্যালেন্ডার আপডেটের ফাংশন
         function updateClockAndCalendar() {
             const now = new Date();
             
@@ -479,7 +403,7 @@ html {
             const liveTimeElement = document.getElementById('live-time');
 
             if (liveTimeElement) {
-                liveTimeElement.textContent = সময়: ${timeString};
+                liveTimeElement.textContent = `সময়: ${timeString}`;
             }
 
             // ক্যালেন্ডার (Calendar)
@@ -504,9 +428,32 @@ html {
             }
         }
 
-        // প্রতি ১ সেকেন্ড অন্তর সময় আপডেট করা
+        // ৪. দৈনিক উক্তি স্বয়ংক্রিয়ভাবে পরিবর্তন করার ফাংশন
+        function updateDailyQuote() {
+            const quotes = [
+                // অনুপ্রেরণামূলক উক্তি, কোরআন/হাদিস (তুমি এগুলো তোমার মতো করে পরিবর্তন করতে পারো)
+                { text: "জ্ঞানের চেয়ে উত্তম পোশাক নেই, আর বিনয়ের চেয়ে উত্তম কিছু নেই।", source: "(হাদিস)" },
+                { text: "সাফল্য একটি চূড়ান্ত গন্তব্য নয়, এটি একটি যাত্রা।", source: "— উইনস্টন চার্চিল" },
+                { text: "তোমার জীবন পরিবর্তন করতে চাও? আজই শুরু করো, আগামীকাল নয়।", source: "— জিম রোহন" },
+                { text: "সবচেয়ে ভালো কাজ হলো সেই কাজ, যা তুমি প্রতিদিনই একটু একটু করে করো।", source: "— প্রবাদ" }
+            ];
+
+            const today = new Date();
+            // মাসের দিন (1 থেকে 31) অনুযায়ী কোট সিলেক্ট করা
+            const dayOfMonth = today.getDate(); 
+            // array 0 থেকে শুরু হয়, তাই dayOfMonth কে quotes.length দিয়ে mod করলে একটি র্যান্ডম কিন্তু দিনের সঙ্গে যুক্ত সংখ্যা পাওয়া যাবে
+            const index = dayOfMonth % quotes.length; 
+
+            const quoteElement = document.getElementById('daily-quote');
+            if (quoteElement) {
+                quoteElement.innerHTML = `“${quotes[index].text}” <br><cite class="text-sm font-medium text-red-500">— ${quotes[index].source}</cite>`;
+            }
+        }
+
+        // লাইভ ক্যালেন্ডার, সময় এবং দৈনিক কোট ইনিশিয়ালাইজ করা
         setInterval(updateClockAndCalendar, 1000);
-        updateClockAndCalendar(); // প্রথমবার কল করা
+        updateClockAndCalendar(); 
+        updateDailyQuote(); 
     </script>
 </body>
 </html>
